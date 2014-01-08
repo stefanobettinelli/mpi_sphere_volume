@@ -18,15 +18,16 @@ double rand_point(double min, double max)
 	int base_random = rand(); /* in [0, RAND_MAX] */
 	if (RAND_MAX == base_random) return rand_point(min, max);
 												
-
 	double range = max - min;
 	double remainder = RAND_MAX % (int)range;
 	double bucket = RAND_MAX / range;
-	/* There are range buckets, plus one smaller interval
-     within remainder of RAND_MAX */
-	if (base_random < RAND_MAX - remainder) {
+	
+	if (base_random < RAND_MAX - remainder)
+	{
 		return min + base_random/bucket;
-	} else {
+	}
+	else
+	{
 		return rand_point(min, max);
 	}
 }
@@ -57,15 +58,12 @@ int main( int argc, char *argv[])
 	int sfere_n = 0;
 	double cx, cy, cz = 0;
 	double raggio = 0;
-	fscanf(sfere_file,"%d", &sfere_n);
-
 	double r_points[sfere_n][3];
-    
+	
+	/*leggo il contenuto del file il numero di sfere e le coordinate dei centri+lunghezza_raggio */
+	fscanf(sfere_file,"%d", &sfere_n);
 	while(fscanf(sfere_file,"%lf %lf %lf %lf",&cx, &cy, &cz, &raggio) != EOF)
 	{
-		//c_x[i] = cx;
-		//c_y[i] = cy;
-		//c_z[i] = cz;
 		x_max = max(x_max,cx + raggio);
 		x_min = min(x_min,cx - raggio);
 		y_max = max(y_max,cy + raggio);
@@ -74,13 +72,13 @@ int main( int argc, char *argv[])
 		z_min = min(z_min,cz - raggio);
 		i++;
 	}
-    
+	
+   /*calcolo il volume del bounding box, lo divido per il numero di punti per ottenere il passo*/
 	Vbb = (x_max-x_min)*(y_max-y_min)*(z_max-z_min);
 	passo = Vbb / sfere_n;
-	printf("valore del passo %lf\n",passo);
 	
+	/*genero i punti casuali all'interno del bouding box usando il passo*/
 	srand((unsigned int)time(NULL));
-	
 	for (i=0; i<sfere_n; i++)
 	{
 		r_points[i][0] = rand_point(passo*i, passo*(i+1));
