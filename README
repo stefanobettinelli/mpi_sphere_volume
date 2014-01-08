@@ -1,0 +1,21 @@
+Corso di Algoritmi Avanzati--modulo 2
+=====================================
+
+Questo archivio contiene tre file di input nel formato specificato
+nella descrizione del primo progetto dell'anno accademico 2013/2014
+(calcolo del volume dell'unione di sfere).
+
+- sfere1.in: contiene 1000 sfere di raggio unitario distribuite in
+  modo regolare all'interno di un cubo di dimensioni 2000x2000x2000;
+  le sfere NON si intersecano, pertanto il volume complessivo dovrebbe
+  risultare prossimo a 1000*4/3*pi = 4188.8
+
+- sfere2.in: contiene 1000 sfere concentriche; la piu' esterna ha
+  raggio 7, pertanto il volume complessivo dovrebbe risultare prossimo
+  a 4/3*pi*7^3 = 1436.8
+
+- sfere3.in: contiene 1000 sfere di raggio e posizione casuali; il
+  volume approssimato, calcolato con 10^6 campioni, dovrebbe essere
+  prossimo a 2633.779028 (questo e' un risultato approssimato ottenuto
+  da una implementazione dell'algoritmo Monte Carlo richiesto
+  dall'esercizio).

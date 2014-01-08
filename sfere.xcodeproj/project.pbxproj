@@ -25,6 +25,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		38B88E7C187B02F0009EF175 /* sfere1.in */ = {isa = PBXFileReference; lastKnownFileType = text; name = sfere1.in; path = sfere/sfere1.in; sourceTree = "<group>"; };
+		38B88E7D187B02F0009EF175 /* sfere2.in */ = {isa = PBXFileReference; lastKnownFileType = text; name = sfere2.in; path = sfere/sfere2.in; sourceTree = "<group>"; };
+		38B88E7E187B02F0009EF175 /* sfere3.in */ = {isa = PBXFileReference; lastKnownFileType = text; name = sfere3.in; path = sfere/sfere3.in; sourceTree = "<group>"; };
+		38B88E7F187C78C1009EF175 /* README */ = {isa = PBXFileReference; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		38BF7E281878562D00D7528E /* sfere */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sfere; sourceTree = BUILT_PRODUCTS_DIR; };
 		38BF7E2B1878562D00D7528E /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		38BF7E2D1878562D00D7528E /* sfere.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = sfere.1; sourceTree = "<group>"; };
@@ -46,6 +50,10 @@
 			children = (
 				38BF7E2A1878562D00D7528E /* sfere */,
 				38BF7E291878562D00D7528E /* Products */,
+				38B88E7C187B02F0009EF175 /* sfere1.in */,
+				38B88E7D187B02F0009EF175 /* sfere2.in */,
+				38B88E7E187B02F0009EF175 /* sfere3.in */,
+				38B88E7F187C78C1009EF175 /* README */,
 			);
 			sourceTree = "<group>";
 		};
@@ -195,6 +203,13 @@
 		38BF7E321878562D00D7528E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"/usr/local/Cellar/open-mpi/1.7.3/include",
+				);
+				LIBRARY_SEARCH_PATHS = "/usr/local/Cellar/open-mpi/1.7.3/lib";
+				OTHER_LDFLAGS = "-lmpi";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -202,6 +217,13 @@
 		38BF7E331878562D00D7528E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"/usr/local/Cellar/open-mpi/1.7.3/include",
+				);
+				LIBRARY_SEARCH_PATHS = "/usr/local/Cellar/open-mpi/1.7.3/lib";
+				OTHER_LDFLAGS = "-lmpi";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -225,6 +247,7 @@
 				38BF7E331878562D00D7528E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
