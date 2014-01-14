@@ -25,6 +25,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		38901686188052D2007EC161 /* my_sfere.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = my_sfere.txt; path = sfere/my_sfere.txt; sourceTree = "<group>"; };
 		38B88E7C187B02F0009EF175 /* sfere1.in */ = {isa = PBXFileReference; lastKnownFileType = text; name = sfere1.in; path = sfere/sfere1.in; sourceTree = "<group>"; };
 		38B88E7D187B02F0009EF175 /* sfere2.in */ = {isa = PBXFileReference; lastKnownFileType = text; name = sfere2.in; path = sfere/sfere2.in; sourceTree = "<group>"; };
 		38B88E7E187B02F0009EF175 /* sfere3.in */ = {isa = PBXFileReference; lastKnownFileType = text; name = sfere3.in; path = sfere/sfere3.in; sourceTree = "<group>"; };
@@ -50,6 +51,7 @@
 			children = (
 				38BF7E2A1878562D00D7528E /* sfere */,
 				38BF7E291878562D00D7528E /* Products */,
+				38901686188052D2007EC161 /* my_sfere.txt */,
 				38B88E7C187B02F0009EF175 /* sfere1.in */,
 				38B88E7D187B02F0009EF175 /* sfere2.in */,
 				38B88E7E187B02F0009EF175 /* sfere3.in */,
@@ -203,6 +205,8 @@
 		38BF7E321878562D00D7528E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_WARN_INHIBIT_ALL_WARNINGS = NO;
+				GCC_WARN_PEDANTIC = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -217,6 +221,8 @@
 		38BF7E331878562D00D7528E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_WARN_INHIBIT_ALL_WARNINGS = NO;
+				GCC_WARN_PEDANTIC = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
