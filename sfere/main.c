@@ -7,7 +7,6 @@
 #include <unistd.h>
 
 #define MASTER 0
-#define COORDS 3
 
 double max(double a, double b){ return (a) > (b) ? (a) : (b); }
 double min(double a,double b){ return (a) < (b) ? (a) : (b); }
@@ -68,9 +67,6 @@ int main( int argc, char *argv[])
 	x_min = y_min = z_min = DBL_MAX;
 	double Vbb = 0;
 	int hits = 0;
-	double passo_x = 0;
-	double passo_y = 0;
-	double passo_z = 0;
 	int sfere_n = 0;
 	double cx, cy, cz = 0;
 	double raggio = 0;
@@ -79,15 +75,6 @@ int main( int argc, char *argv[])
 	
 	/*leggo il contenuto del file il numero di sfere e le coordinate dei centri+lunghezza_raggio */
 	fscanf(sfere_file,"%d", &sfere_n);
-	/*
-	 calcolo la radice cubica del numero di punti per ottenere
-	 il numero di intervalli in cui dividere gli spigoli del bounding box
-	*/
-	int intervals = ceil(cbrt(points));
-	if( intervals == 1 ){
-		fprintf(stderr, "È stato fornito solo 1 punto...esco\n");
-		return -1;
-	}
 	
 	/*matrice di sfere cx,cy,cz,raggio NB: tutti i task hanno a disposizione la matrice*/
 	double sfere[sfere_n][4];
@@ -113,10 +100,6 @@ int main( int argc, char *argv[])
 	 il passo è semplicemente la lunghezza degli intervalli in cui divido gli spigoli del BB
 	 */
 	Vbb = (x_max-x_min)*(y_max-y_min)*(z_max-z_min);
-	passo_x = (x_max-x_min) / intervals;
-	passo_y = (y_max-y_min) / intervals;
-	passo_z = (z_max-z_min) / intervals;
-	
 	/*genero i punti casuali all'interno del bouding box usando il passo*/
 	if(taskid == MASTER)
 	{
@@ -131,7 +114,7 @@ int main( int argc, char *argv[])
 	
 	int rows = (int)(points / numtasks);
 	double task_points[rows][3];
-	MPI_Scatter(r_points,rows*COORDS,MPI_DOUBLE,task_points,rows*COORDS,MPI_DOUBLE,MASTER,MPI_COMM_WORLD);
+	MPI_Scatter(r_points,rows*3,MPI_DOUBLE,task_points,rows*3,MPI_DOUBLE,MASTER,MPI_COMM_WORLD);
 	
 	for (i = 0; i<rows; i++) {
 		//printf("%d [%lf | %lf | %lf]\n", taskid, task_points[i][0], task_points[i][1], task_points[i][2]);
@@ -154,7 +137,6 @@ int main( int argc, char *argv[])
 	if (taskid == MASTER) {
 		for (i=0; i<numtasks; i++){
 			total_hits += hits_master[i];
-			printf("hits_array[%d] = %d\n",i ,hits_master[i]);
 		}
 		printf("Vbb %lf\ntotal_hits %d\npoints %d\nEST VOLUME %lf from task %d\n",Vbb,total_hits,points,Vbb*(1.0*total_hits/points), taskid);
 	}
