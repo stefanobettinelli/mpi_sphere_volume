@@ -11,17 +11,14 @@
 double max(double a, double b){ return (a) > (b) ? (a) : (b); }
 double min(double a,double b){ return (a) < (b) ? (a) : (b); }
 
-/* mi serve un intervallo semiapert [min, max) */
+/*genera un reale nell'intervallo [min, max] */
 double rand_point(double min, double max)
 {
 	double f = (double)rand() / RAND_MAX;
 	double dart = min + f * (max - min);
-	if (dart == max) {
-		rand_point(min, max);
-	}
 	return dart;
 }
-
+/*controllo se il punto generato (x,y,z) è all'interno di una sfera (cx,cy,cz,r)*/
 int hit(double x, double y, double z, double cx, double cy, double cz, double r)
 {
 	int hit = 0;
@@ -31,6 +28,7 @@ int hit(double x, double y, double z, double cx, double cy, double cz, double r)
 
 int main( int argc, char *argv[])
 {
+	/*qualche controllo preliminare...*/
 	if(argc != 3)
 	{
 		fprintf(stderr,"usage:\n\tmpirun -n NN sfere <filename> <pointsnumber>\n");
@@ -44,7 +42,7 @@ int main( int argc, char *argv[])
 		return -1;
 	}
 	
-	/* Obtain number of tasks and task ID */
+	/* inizio programma mpi */
 	int numtasks, taskid;
 	int rc = MPI_Init(&argc,&argv);
 	if (rc != MPI_SUCCESS) {
@@ -95,12 +93,9 @@ int main( int argc, char *argv[])
 		i++;
 	}
 	
-	/*Vbb: volume del bounding box. 
-	 Lo divido per il numero di punti per ottenere il passo,
-	 il passo è semplicemente la lunghezza degli intervalli in cui divido gli spigoli del BB
-	 */
+	/*Vbb: volume del bounding box*/
 	Vbb = (x_max-x_min)*(y_max-y_min)*(z_max-z_min);
-	/*genero i punti casuali all'interno del bouding box usando il passo*/
+	/*genero i punti casuali all'interno del bouding box*/
 	if(taskid == MASTER)
 	{
 		srand((unsigned int)time(NULL));
@@ -111,11 +106,11 @@ int main( int argc, char *argv[])
 		}
 		
 	}
-	
+	/*rows sono le righe della matrice sottomesse ad ogni task*/
 	int rows = (int)(points / numtasks);
 	double task_points[rows][3];
 	MPI_Scatter(r_points,rows*3,MPI_DOUBLE,task_points,rows*3,MPI_DOUBLE,MASTER,MPI_COMM_WORLD);
-	
+	/*ogni task controlla se la porzione di punti a lui assegnata ricade all'interno di almeno una sfera*/
 	for (i = 0; i<rows; i++) {
 		//printf("%d [%lf | %lf | %lf]\n", taskid, task_points[i][0], task_points[i][1], task_points[i][2]);
 		for (j=0; j<sfere_n; j++) {
@@ -128,17 +123,18 @@ int main( int argc, char *argv[])
 	printf("hit %d from task %d\n",hits,taskid);
 	
 	int* hits_master = NULL;
-	//if(taskid == MASTER){
+	if(taskid == MASTER){
 		hits_master = (int*) malloc(numtasks*sizeof(int));
-	//}
+	}
+	/*roccolata degli hits nel MASTER TASK*/
 	MPI_Gather(&hits, 1, MPI_INT, hits_master, 1, MPI_INT, MASTER, MPI_COMM_WORLD);
-	i=0;
 	int total_hits = 0;
 	if (taskid == MASTER) {
 		for (i=0; i<numtasks; i++){
 			total_hits += hits_master[i];
 		}
-		printf("Vbb %lf\ntotal_hits %d\npoints %d\nEST VOLUME %lf from task %d\n",Vbb,total_hits,points,Vbb*(1.0*total_hits/points), taskid);
+		/*Stampo il valore del volume stimato con il metodo monte carlo*/
+		printf("Vbb %lf\ntotal_hits %d\npoints %d\nESTIMATED VOLUME %lf from task %d\n",Vbb,total_hits,points,Vbb*(1.0*total_hits/points), taskid);
 	}
 	MPI_Finalize();
 	free(hits_master);
