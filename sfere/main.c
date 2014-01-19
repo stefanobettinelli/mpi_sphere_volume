@@ -112,7 +112,7 @@ int main( int argc, char *argv[])
 	MPI_Scatter(r_points,rows*3,MPI_DOUBLE,task_points,rows*3,MPI_DOUBLE,MASTER,MPI_COMM_WORLD);
 	/*ogni task controlla se la porzione di punti a lui assegnata ricade all'interno di almeno una sfera*/
 	for (i = 0; i<rows; i++) {
-		//printf("%d [%lf | %lf | %lf]\n", taskid, task_points[i][0], task_points[i][1], task_points[i][2]);
+		printf("%d [%lf | %lf | %lf]\n", taskid, task_points[i][0], task_points[i][1], task_points[i][2]);
 		for (j=0; j<sfere_n; j++) {
 			if( hit(task_points[i][0], task_points[i][1], task_points[i][2], sfere[j][0], sfere[j][1], sfere[j][2], sfere[j][3]) == 1 ){
 				hits++;
@@ -130,11 +130,14 @@ int main( int argc, char *argv[])
 	MPI_Gather(&hits, 1, MPI_INT, hits_master, 1, MPI_INT, MASTER, MPI_COMM_WORLD);
 	int total_hits = 0;
 	if (taskid == MASTER) {
+		double estVol = 0;
 		for (i=0; i<numtasks; i++){
 			total_hits += hits_master[i];
 		}
+		
 		/*Stampo il valore del volume stimato con il metodo monte carlo*/
-		printf("Vbb %lf\ntotal_hits %d\npoints %d\nESTIMATED VOLUME %lf from task %d\n",Vbb,total_hits,points,Vbb*(1.0*total_hits/points), taskid);
+		estVol = Vbb*(1.0*total_hits/points);
+		printf("Vbb %lf\ntotal_hits %d\npoints %d\nESTIMATED VOLUME %lf from task %d\n",Vbb,total_hits,points,estVol,taskid);
 	}
 	MPI_Finalize();
 	free(hits_master);

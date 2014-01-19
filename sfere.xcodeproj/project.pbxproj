@@ -29,10 +29,11 @@
 		38B88E7C187B02F0009EF175 /* sfere1.in */ = {isa = PBXFileReference; lastKnownFileType = text; name = sfere1.in; path = sfere/sfere1.in; sourceTree = "<group>"; };
 		38B88E7D187B02F0009EF175 /* sfere2.in */ = {isa = PBXFileReference; lastKnownFileType = text; name = sfere2.in; path = sfere/sfere2.in; sourceTree = "<group>"; };
 		38B88E7E187B02F0009EF175 /* sfere3.in */ = {isa = PBXFileReference; lastKnownFileType = text; name = sfere3.in; path = sfere/sfere3.in; sourceTree = "<group>"; };
-		38B88E7F187C78C1009EF175 /* README */ = {isa = PBXFileReference; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		38B88E7F187C78C1009EF175 /* stime */ = {isa = PBXFileReference; lastKnownFileType = text; path = stime; sourceTree = "<group>"; };
 		38BF7E281878562D00D7528E /* sfere */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sfere; sourceTree = BUILT_PRODUCTS_DIR; };
 		38BF7E2B1878562D00D7528E /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		38BF7E2D1878562D00D7528E /* sfere.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = sfere.1; sourceTree = "<group>"; };
+		38EB087A188C492000B810EE /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,7 +56,8 @@
 				38B88E7C187B02F0009EF175 /* sfere1.in */,
 				38B88E7D187B02F0009EF175 /* sfere2.in */,
 				38B88E7E187B02F0009EF175 /* sfere3.in */,
-				38B88E7F187C78C1009EF175 /* README */,
+				38B88E7F187C78C1009EF175 /* stime */,
+				38EB087A188C492000B810EE /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
